@@ -1,0 +1,12 @@
+LICENSE
+README.md
+pyproject.toml
+termarcade/__init__.py
+termarcade/ansi.py
+termarcade/app.py
+termarcade/input.py
+termarcade/objspin.py
+termarcade.egg-info/PKG-INFO
+termarcade.egg-info/SOURCES.txt
+termarcade.egg-info/dependency_links.txt
+termarcade.egg-info/top_level.txt

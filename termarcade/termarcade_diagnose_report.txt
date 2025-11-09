@@ -1,0 +1,28 @@
+======================================================================
+termarcade — diagnostic script
+Time: 2025-11-09T14:06:53.552520
+======================================================================
+
+[1] Environment
+Python: 3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944 64 bit (AMD64)]
+Executable: C:\Python314\python.exe
+Platform: Windows-11-10.0.26200-SP0
+OS: Windows 11 (10.0.26200)
+Machine: AMD64
+Terminal size reported: 120x30
+Stdout isatty: True
+Stdin isatty: True
+
+[2] ANSI / color support
+Windows VT enable: OK (virtual terminal processing on)
+ANSI support status (best guess): True
+
+[3] Importing termarcade modules
+Imports: FAILED
+Traceback (most recent call last):
+  File "C:\Users\willy\OneDrive - Maclay School\Desktop\Quant\termarcade\diagnose_termarcade.py", line 94, in main
+    import termarcade
+ModuleNotFoundError: No module named 'termarcade'
+
+
+Terminating early because import failed. See report for traceback.
