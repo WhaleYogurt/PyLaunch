@@ -4,7 +4,7 @@ A tiny terminal UI + OBJ spinner library with color, non-blocking input, and a c
 
 - **TerminalApp** — simple render/update/input loop (you fully control it)
 - **MenuWidget** — arrow-key menus with custom rendering
-- **OBJSpinner** — load **any `.obj`**, build a trimmed ASCII frame cache, and play it smoothly
+- **OBJSpinner** — load **any `.obj`**, build a trimmed ASCII frame cache (JSON + metadata), and play it smoothly
 - Ships with a **default Lambda (Λ)** model; pass your own OBJ path to override
 
 ## Quick start
@@ -16,9 +16,15 @@ python scripts/launcher.py path/to/model.obj       # custom OBJ
 python scripts/launcher.py --rebuild path/to.obj   # force rebuild
 
 python examples/snake/snake.py                     # run the Snake demo
-What’s inside
-bash
-Copy code
+```
+
+Cache files live next to your model as `<model>.obj.cache.json` and are rebuilt
+automatically when parameters change. Pass `--rebuild` (or
+`spinner.build_if_needed(force=True)`) to refresh them manually.
+
+## What's inside
+
+```
 termarcade/
   ansi.py         # color helpers
   input.py        # key polling (Windows + POSIX)
@@ -35,10 +41,9 @@ docs/
   OBJSpinner.md
 pyproject.toml
 LICENSE
-See docs/ for more details.
+```
 
-vbnet
-Copy code
+See docs/ for more details.
 
 ---
 

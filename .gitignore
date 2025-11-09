@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Local virtual environments
+.venv/
+venv/
+env/
+
+# Generated OBJ spinner caches
+*.obj.cache.json
+
+# Diagnostics and logs
+termarcade/termarcade_diagnose_report.txt
+*.log

@@ -56,7 +56,11 @@ def safe_truncate(s: str, width: int) -> str:
             out.append(s[i])
             vis += 1
             i += 1
-    return "".join(out)
+    truncated = i < len(s)
+    result = "".join(out)
+    if truncated and "\x1b[" in result and not result.endswith(RESET):
+        result += RESET
+    return result
 
 def fit_line(s: str, width: int) -> str:
     return safe_pad(safe_truncate(s, width), width)

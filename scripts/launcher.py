@@ -56,7 +56,7 @@ def main():
             write("")
             p = spinner.obj_path
             write(f"Model: {p}")
-            write(f"Cache: {p}.pkl")
+            write(f"Cache: {spinner.cache_path}")
         else:
             write("Playing... Press Enter to return to menu.")
             def key_cb(k):

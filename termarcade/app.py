@@ -60,7 +60,8 @@ class TerminalApp:
     def __init__(self, title="App"): self.title=title
     def run(self, state:dict|None, menu:MenuWidget|None,
             on_key:Callable, on_render:Callable, on_update:Callable|None=None, fps:int=30):
-        state = state or {}
+        if state is None:
+            state = {}
         ctx = Context(0,0,state,menu)
         if not IS_WINDOWS:
             fd = sys.stdin.fileno()
@@ -69,6 +70,7 @@ class TerminalApp:
         try:
             hide_cursor(); clear_screen()
             frame_dt = 1.0 / max(1, fps); last = time.perf_counter()
+            previous_line_count = 0
             while not ctx._exit:
                 ctx.width, ctx.height = get_size()
                 now = time.perf_counter(); dt = now - last; last = now
@@ -76,6 +78,12 @@ class TerminalApp:
                 lines=[]
                 def write(s: str): lines.append(fit_line(s, ctx.width))
                 on_render(ctx, write)
+                total_lines = len(lines)
+                if total_lines < previous_line_count:
+                    blank_line = fit_line("", ctx.width)
+                    lines.extend(blank_line for _ in range(previous_line_count - total_lines))
+                    total_lines = previous_line_count
+                previous_line_count = total_lines
                 move_home(); sys.stdout.write("\n".join(lines)); sys.stdout.flush()
                 k = poll_key()
                 if k is not None:

@@ -69,7 +69,7 @@ Cache and play a horizontally spinning ASCII view of any `.obj` file.
 from termarcade.objspin import OBJSpinner
 
 spinner = OBJSpinner(obj_path="path/to/model.obj", aspect=0.5, frames=144)
-spinner.build_if_needed(force=False)   # builds <model>.obj.pkl next to your OBJ
+spinner.build_if_needed(force=False)   # builds <model>.obj.cache.json next to your OBJ
 spinner.playback(fps=30.0)             # streams cached frames to the terminal
 Default Lambda
 If you do not pass an obj_path, the built-in Lambda model is used:
@@ -84,7 +84,7 @@ Computes a global bounding box so no characters get clipped
 
 Crops every frame to that box
 
-Saves frames as a .pkl cache next to your OBJ for fast playback
+Saves frames as a JSON cache with build metadata next to your OBJ for fast playback and validation
 
 yaml
 Copy code

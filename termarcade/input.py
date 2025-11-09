@@ -1,8 +1,21 @@
+import locale
 import os, sys
 
 IS_WINDOWS = os.name == "nt"
 if IS_WINDOWS:
     import msvcrt
+    def _read_windows_char():
+        """Return the next keypress as a str, honoring the active console codepage."""
+        if hasattr(msvcrt, "getwch"):
+            try:
+                return msvcrt.getwch()
+            except Exception:
+                pass
+        encoding = sys.stdout.encoding or locale.getpreferredencoding(False) or "utf-8"
+        try:
+            return msvcrt.getch().decode(encoding, errors="ignore")
+        except Exception:
+            return ""
 else:
     import termios, tty, select
 
@@ -13,17 +26,15 @@ def poll_key():
     """Return one of Keys.* or a printable char, or None if no key."""
     if IS_WINDOWS:
         if not msvcrt.kbhit(): return None
-        b = msvcrt.getch()
-        if b in (b"\x00", b"\xe0"):
-            code = msvcrt.getch()
-            return {b"H":Keys.UP, b"P":Keys.DOWN, b"K":Keys.LEFT, b"M":Keys.RIGHT}.get(code, None)
-        if b in (b"\r", b"\n"): return Keys.ENTER
-        if b == b"\x1b":        return Keys.ESC
-        try:
-            c = b.decode("utf-8", errors="ignore")
-            return c if c and c.isprintable() else None
-        except Exception:
-            return None
+        ch = _read_windows_char()
+        if not ch: return None
+        if ch in ("\x00", "\xe0"):
+            code = _read_windows_char()
+            mapping = {"H":Keys.UP, "P":Keys.DOWN, "K":Keys.LEFT, "M":Keys.RIGHT}
+            return mapping.get(code)
+        if ch in ("\r", "\n"): return Keys.ENTER
+        if ch == "\x1b":       return Keys.ESC
+        return ch if ch.isprintable() else None
     else:
         dr, _, _ = select.select([sys.stdin], [], [], 0)
         if not dr: return None
